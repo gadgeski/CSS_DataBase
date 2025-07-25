@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Database Viewer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">User Database Viewer</h1>
+            <p class="hero-subtitle">シンプルで美しいデータベース管理ツール</p>
+        </div>
+        <div class="hero-gradient"></div>
+    </div>
+
+    <main class="main-container">
+        <section class="control-section">
+            <div class="section-header">
+                <h2>データ操作</h2>
+                <p>データベースの表示・管理を行います</p>
+            </div>
+            
+            <div class="button-grid">
+                <button class="btn btn-primary" onclick="loadAllUsers()">
+                    <span class="btn-icon">👥</span>
+                    全ユーザーデータを取得
+                </button>
+                <button class="btn btn-secondary" onclick="addSampleData()">
+                    <span class="btn-icon">📊</span>
+                    サンプルデータを追加
+                </button>
+                <button class="btn btn-danger" onclick="clearData()">
+                    <span class="btn-icon">🗑️</span>
+                    データをクリア
+                </button>
+            </div>
+        </section>
+
+        <div id="status" class="status-message" style="display: none;"></div>
+
+        <section class="data-section">
+            <div id="userTable" class="table-container"></div>
+        </section>
+
+        <section class="code-section">
+            <div class="section-header">
+                <h2>参考コード</h2>
+                <p>元のPythonコードの実装</p>
+            </div>
+            
+            <div class="code-container">
+                <div class="code-header">
+                    <span class="code-language">Python</span>
+                    <span class="code-filename">database.py</span>
+                </div>
+                <pre class="code-block"><code>import sqlite3
+
+def select_all_users():
+    conn = None
+    try:
+        conn = sqlite3.connect('my_database.db')
+        cursor = conn.cursor()
+
+        # 全てのユーザーデータを取得
+        cursor.execute("SELECT id, name, email FROM users")
+        rows = cursor.fetchall()
+
+        if rows:
+            print("--- 全ユーザーデータ ---")
+            for row in rows:
+                print(f"ID: {row[0]}, 名前: {row[1]}, メール: {row[2]}")
+            print("--------------------")
+        else:
+            print("ユーザーデータがありません。")
+
+    except sqlite3.Error as e:
+        print(f"エラーが発生しました: {e}")
+    finally:
+        if conn:
+            conn.close()
+
+if __name__ == "__main__":
+    select_all_users()</code></pre>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 User Database Viewer. Designed with modern web technologies.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
